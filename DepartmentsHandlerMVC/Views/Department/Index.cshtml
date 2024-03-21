@@ -5,9 +5,12 @@
 
 <h1>All Departments</h1>
 <br />
+<a class="btn btn-success" asp-action="Create" mt-5>
+	Create New Department
+</a>
 @if (Model.Count() > 0)
 {
-	<table class="table table-striped table-hover mt-5">
+	<table class="table table-striped table-hover mt-3">
 		<thead>
 			<tr>
 				<td>@Html.DisplayNameFor(d => d.Code)</td>
