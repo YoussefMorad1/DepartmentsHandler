@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace BLL_BusinessLogicLayer.Repositories
 {
-	class DepartmentsRepository : IDepartmentsRepository
+	public class DepartmentRepository : IDepartmentRepository
 	{
 		private readonly MainContext dbContext;
 
-		public DepartmentsRepository(MainContext dbContext)
+		public DepartmentRepository(MainContext dbContext)
 			=> this.dbContext = dbContext;
 
 
@@ -32,7 +32,7 @@ namespace BLL_BusinessLogicLayer.Repositories
 
 		public IEnumerable<Department> GetAll()
 		{
-			return dbContext.Departments.ToList();
+			return dbContext.Departments.AsNoTracking().ToList();
 		}
 
 		public Department GetById(int id)
