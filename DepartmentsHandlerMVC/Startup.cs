@@ -1,6 +1,10 @@
+using BLL_BusinessLogicLayer.Interfaces;
+using BLL_BusinessLogicLayer.Repositories;
+using DAL_DataAccessLayer.Data.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +28,10 @@ namespace DepartmentsHandlerMVC
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
+			services.AddDbContext<MainContext>(
+				options => options.UseSqlServer(Configuration.GetConnectionString("DevelopmentConnection"))
+				);
+			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

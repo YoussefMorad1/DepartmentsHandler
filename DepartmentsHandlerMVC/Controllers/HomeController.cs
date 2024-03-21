@@ -1,4 +1,4 @@
-﻿using DepartmentsHandlerMVC.Models;
+﻿using DepartmentsHandlerMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
