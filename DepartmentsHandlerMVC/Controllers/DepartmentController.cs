@@ -68,6 +68,17 @@ namespace PL_PresentationLayerMVC.Controllers
         #endregion
 
         #region Delete Operation
+        // Returns Delete View of Department
+        public IActionResult DeleteView(int? id)
+        {
+			if (!id.HasValue)
+				return NotFound();
+			var department = departmnetRepository.GetById(id.Value);
+			if (department == null)
+				return NotFound();
+            return View(department);
+		}
+        // Gets Department from Database and Deletes it
         public IActionResult Delete(int? id)
         {
             if (!id.HasValue)
