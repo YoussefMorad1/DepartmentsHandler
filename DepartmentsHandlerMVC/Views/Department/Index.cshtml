@@ -10,10 +10,7 @@
 	Create New Department
 </a>
 
-<div class="form-check form-switch">
-	<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-	<label class="form-check-label" for="flexSwitchCheckDefault" title="This option Will show PopUp on deleteing instead of moving to another page">Use PopUp</label>
-</div>
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -27,7 +24,7 @@
 			<div class="modal-body">
 				Are you sure you want to delete this department?
 			</div>
-			<form class="modal-footer" asp-action="Delete" method="get">
+			<form class="modal-footer" asp-action="DeleteById">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				<input type="hidden" name="Id" />
 				<input type="submit" class="btn btn-danger" value="Delete" />
@@ -46,7 +43,12 @@
 				<td>@Html.DisplayNameFor(d => d.DateOfCreation)</td>
 				<td>Details</td>
 				<td>Update</td>
-				<td>Delete</td>
+				<td>Delete
+					<div class="form-check form-switch d-inline-block">
+						<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" title="Use PopUp Window with delete instead of moving to delete page">
+						<label></label>
+					</div>
+				</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -67,7 +69,7 @@
 						</a>
 					</td>
 					<td>
-						<a data-id="@item.Id" data-name="@item.Name" asp-route-id="@item.Id" asp-action="DeleteView" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger">
+						<a data-id="@item.Id" data-name="@item.Name" asp-route-id="@item.Id" asp-action="Delete" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger">
 							<i class="fas fa-trash"></i> Delete
 						</a>
 					</td>
