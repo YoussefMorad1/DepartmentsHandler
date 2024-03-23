@@ -16,6 +16,5 @@ namespace DAL_DataAccessLayer.Data.Contexts
         public MainContext(DbContextOptions<MainContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
 	}
 }
