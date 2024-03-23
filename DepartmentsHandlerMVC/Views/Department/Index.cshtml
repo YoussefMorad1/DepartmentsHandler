@@ -10,6 +10,11 @@
 	Create New Department
 </a>
 
+<div class="form-check form-switch">
+	<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+	<label class="form-check-label" for="flexSwitchCheckDefault" title="This option Will show PopUp on deleteing instead of moving to another page">Use PopUp</label>
+</div>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -62,9 +67,9 @@
 						</a>
 					</td>
 					<td>
-						<button data-id="@item.Id" data-name="@item.Name" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger">
+						<a data-id="@item.Id" data-name="@item.Name" asp-route-id="@item.Id" asp-action="Edit" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger">
 							<i class="fas fa-trash"></i> Delete
-						</button>
+						</a>
 					</td>
 				</tr>
 			}
@@ -83,6 +88,11 @@ else
 	<script>
 		$(document).ready(function () {
 			$('a[data-toggle=modal],button[data-toggle=modal]').click(function () {
+				if (!$('#flexSwitchCheckDefault').is(':checked'))
+				{
+					$(this).removeAttr('data-toggle');
+					return;
+				}
 				var data_id = $(this).data('id');
 				var data_name = $(this).data('name');
 				$('#exampleModal form input[name=Id]').val(data_id);
