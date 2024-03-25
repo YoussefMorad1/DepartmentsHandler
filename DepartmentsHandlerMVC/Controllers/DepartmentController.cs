@@ -7,17 +7,17 @@ namespace PL_PresentationLayerMVC.Controllers
     public class DepartmentController : Controller
     {
         #region Fields & Properties
-        private readonly IGenericRepository<Department> departmnetRepository;
+        private readonly IGenericRepository<Department> departmentRepository;
         #endregion
 
         #region Constructor
-        public DepartmentController(IDepartmentRepository departmnetRepository)
-            => this.departmnetRepository = departmnetRepository;
+        public DepartmentController(IGenericRepository<Department> departmnetRepository)
+            => this.departmentRepository = departmnetRepository;
         #endregion
 
         #region Index/GetAllDepartments operations
         public IActionResult Index()
-            => View(departmnetRepository.GetAll());
+            => View(departmentRepository.GetAll());
         #endregion
 
         #region Create Operation
@@ -28,7 +28,7 @@ namespace PL_PresentationLayerMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                departmnetRepository.Add(department);
+                departmentRepository.Add(department);
                 return RedirectToAction(nameof(Index));
             }
             return View(department);
@@ -40,7 +40,7 @@ namespace PL_PresentationLayerMVC.Controllers
         {
             if (!id.HasValue)
                 return NotFound();
-            var department = departmnetRepository.GetById(id.Value);
+            var department = departmentRepository.GetById(id.Value);
             if (department == null)
                 return NotFound();
             return View(viewName, department);
@@ -60,7 +60,7 @@ namespace PL_PresentationLayerMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                departmnetRepository.Update(department);
+                departmentRepository.Update(department);
                 return RedirectToAction(nameof(Index));
             }
             return View(department);
@@ -78,7 +78,7 @@ namespace PL_PresentationLayerMVC.Controllers
         {
             if (!id.HasValue)
 				return NotFound();
-            var department = departmnetRepository.GetById(id.Value);
+            var department = departmentRepository.GetById(id.Value);
             if (department == null)
                 return NotFound();
             return Delete(department);
@@ -86,7 +86,7 @@ namespace PL_PresentationLayerMVC.Controllers
         [HttpPost]
         public IActionResult Delete(Department department)
         {
-			departmnetRepository.Delete(department);
+			departmentRepository.Delete(department);
 			return RedirectToAction(nameof(Index));
 		}
         #endregion

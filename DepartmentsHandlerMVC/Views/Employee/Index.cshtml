@@ -1,0 +1,121 @@
+﻿@model IEnumerable<Employee>
+@{
+	ViewData["Title"] = "All Employees";
+}
+
+<h1>All Employees</h1>
+<br />
+
+<a class="btn btn-success" asp-action="Create" mt-5>
+	Add New Employee
+</a>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Are you sure you want to delete this employee?
+			</div>
+			<form class="modal-footer" asp-action="DeleteById">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<input type="hidden" name="Id" />
+				<input type="submit" class="btn btn-danger" value="Delete" />
+			</form>
+		</div>
+	</div>
+</div>
+
+@if (Model.Count() > 0)
+{
+	<table class="table table-striped table-hover mt-3">
+		<thead>
+			<tr>
+				<td>@Html.DisplayNameFor(e => e.Name)</td>
+				<td>@Html.DisplayNameFor(e => e.Age)</td>
+				<td>@Html.DisplayNameFor(e => e.Address)</td>
+				<td>@Html.DisplayNameFor(e => e.Salary)</td>
+				<td>@Html.DisplayNameFor(e => e.IsActive)</td>
+				<td>@Html.DisplayNameFor(e => e.Email)</td>
+				<td>@Html.DisplayNameFor(e => e.Phone)</td>
+				<td>@Html.DisplayNameFor(e => e.Gender)</td>
+				<td>@Html.DisplayNameFor(e => e.EmployeeType)</td>
+				<td>@Html.DisplayNameFor(e => e.HireDate)</td>
+
+				<td>Details</td>
+				<td>Update</td>
+				<td>
+					Delete
+					<div class="form-check form-switch d-inline-block">
+						<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" title="Use PopUp Window with delete instead of moving to delete page">
+						<label></label>
+					</div>
+				</td>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+
+					<td>@Html.DisplayFor(e => item.Name)</td>
+					<td>@Html.DisplayFor(e => item.Age)</td>
+					<td>@Html.DisplayFor(e => item.Address)</td>
+					<td>@Html.DisplayFor(e => item.Salary)</td>
+					<td>@Html.DisplayFor(e => item.IsActive)</td>
+					<td>@Html.DisplayFor(e => item.Email)</td>
+					<td>@Html.DisplayFor(e => item.Phone)</td>
+					<td>@Html.DisplayFor(e => item.Gender)</td>
+					<td>@Html.DisplayFor(e => item.EmployeeType)</td>
+					<td>@Html.DisplayFor(e => item.HireDate)</td>
+					<td>
+						<a asp-action="ShowDetails" asp-route-id="@item.Id" class="btn btn-warning">
+							<i class="fas fa-eye"></i> Details
+						</a>
+					</td>
+					<td>
+						<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">
+							<i class="fas fa-edit"></i> Edit
+						</a>
+					</td>
+					<td>
+						<a data-id="@item.Id" data-name="@item.Name" asp-route-id="@item.Id" asp-action="Delete" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger">
+							<i class="fas fa-trash"></i> Delete
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<div class="mt-5 alert alert-warning">
+		<h3>There are No Employees, yet ;)</h3>
+	</div>
+}
+
+@section ModalExampleScript
+{
+	<script>
+		$(document).ready(function () {
+			$('a[data-toggle=modal],button[data-toggle=modal]').click(function () {
+				if (!$('#flexSwitchCheckDefault').is(':checked')) {
+					$(this).removeAttr('data-toggle');
+					return;
+				}
+				var data_id = $(this).data('id');
+				var data_name = $(this).data('name');
+				$('#exampleModal form input[name=Id]').val(data_id);
+				$('#exampleModalLabel').text(data_name + ' Employee Delete');
+			})
+		});
+	</script>
+}

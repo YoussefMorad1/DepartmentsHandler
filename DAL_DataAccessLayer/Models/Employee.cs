@@ -17,9 +17,9 @@ namespace DAL_DataAccessLayer.Models
 	}
     public enum  EmplyeeType
     {
-		[EnumMember(Value = "Full Time")]
+		[EnumMember(Value = "FullTime")]
         FullTime = 1,
-		[EnumMember(Value = "Part Time")]
+		[EnumMember(Value = "PartTime")]
 		PartTime = 2,
     }
     public class Employee
