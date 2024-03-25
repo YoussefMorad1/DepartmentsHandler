@@ -7,7 +7,7 @@ namespace PL_PresentationLayerMVC.Controllers
     public class DepartmentController : Controller
     {
         #region Fields & Properties
-        private readonly IDepartmentRepository departmnetRepository;
+        private readonly IGenericRepository<Department> departmnetRepository;
         #endregion
 
         #region Constructor
