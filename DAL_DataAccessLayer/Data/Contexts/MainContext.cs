@@ -13,6 +13,7 @@ namespace DAL_DataAccessLayer.Data.Contexts
     public class MainContext : DbContext
     {
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public MainContext(DbContextOptions<MainContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
