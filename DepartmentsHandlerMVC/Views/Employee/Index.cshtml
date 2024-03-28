@@ -40,14 +40,14 @@
 			<tr>
 				<td>@Html.DisplayNameFor(e => e.Name)</td>
 				<td>@Html.DisplayNameFor(e => e.Age)</td>
-				<td>@Html.DisplayNameFor(e => e.Address)</td>
+				@* <td>@Html.DisplayNameFor(e => e.Address)</td> *@
 				<td>@Html.DisplayNameFor(e => e.Salary)</td>
-				<td>@Html.DisplayNameFor(e => e.IsActive)</td>
-				<td>@Html.DisplayNameFor(e => e.Email)</td>
+				@* <td>@Html.DisplayNameFor(e => e.IsActive)</td> *@
+				@* <td>@Html.DisplayNameFor(e => e.Email)</td> *@
 				<td>@Html.DisplayNameFor(e => e.Phone)</td>
 				<td>@Html.DisplayNameFor(e => e.Gender)</td>
 				<td>@Html.DisplayNameFor(e => e.EmployeeType)</td>
-				<td>@Html.DisplayNameFor(e => e.HireDate)</td>
+				@* <td>@Html.DisplayNameFor(e => e.HireDate)</td> *@
 
 				<td>Details</td>
 				<td>Update</td>
@@ -67,29 +67,15 @@
 
 					<td>@Html.DisplayFor(e => item.Name)</td>
 					<td>@Html.DisplayFor(e => item.Age)</td>
-					<td>@Html.DisplayFor(e => item.Address)</td>
+					@* <td>@Html.DisplayFor(e => item.Address)</td> *@
 					<td>@Html.DisplayFor(e => item.Salary)</td>
-					<td>@Html.DisplayFor(e => item.IsActive)</td>
-					<td>@Html.DisplayFor(e => item.Email)</td>
+					@* <td>@Html.DisplayFor(e => item.IsActive)</td> *@
+					@* <td>@Html.DisplayFor(e => item.Email)</td> *@
 					<td>@Html.DisplayFor(e => item.Phone)</td>
 					<td>@Html.DisplayFor(e => item.Gender)</td>
 					<td>@Html.DisplayFor(e => item.EmployeeType)</td>
-					<td>@Html.DisplayFor(e => item.HireDate)</td>
-					<td>
-						<a asp-action="ShowDetails" asp-route-id="@item.Id" class="btn btn-warning">
-							<i class="fas fa-eye"></i> Details
-						</a>
-					</td>
-					<td>
-						<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">
-							<i class="fas fa-edit"></i> Edit
-						</a>
-					</td>
-					<td>
-						<a data-id="@item.Id" data-name="@item.Name" asp-route-id="@item.Id" asp-action="Delete" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger">
-							<i class="fas fa-trash"></i> Delete
-						</a>
-					</td>
+					@* <td>@Html.DisplayFor(e => item.HireDate)</td> *@
+					<partial name="_ButtonsPartialView" model="@item" />
 				</tr>
 			}
 		</tbody>

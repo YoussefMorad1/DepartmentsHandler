@@ -26,7 +26,7 @@ namespace DAL_DataAccessLayer.Data.ModelsConfigurations
 										);
 			builder.Property(e => e.EmployeeType).HasConversion(
 											(g) => g.ToString(),
-											(str) => (EmplyeeType)Enum.Parse(typeof(EmplyeeType), str, true) 
+											(str) => (EmployeeType)Enum.Parse(typeof(EmployeeType), str, true) 
 										);
 		}
 

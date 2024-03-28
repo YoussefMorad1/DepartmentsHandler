@@ -58,21 +58,7 @@
 					<td>@Html.DisplayFor(d => item.Code)</td>
 					<td>@Html.DisplayFor(d => item.Name)</td>
 					<td>@Html.DisplayFor(d => item.DateOfCreation)</td>
-					<td>
-						<a asp-controller="Department" asp-action="ShowDetails" asp-route-id="@item.Id" class="btn btn-warning">
-							<i class="fas fa-eye"></i> Details
-						</a>
-					</td>
-					<td>
-						<a asp-controller="Department" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">
-							<i class="fas fa-edit"></i> Edit
-						</a>
-					</td>
-					<td>
-						<a data-id="@item.Id" data-name="@item.Name" asp-route-id="@item.Id" asp-action="Delete" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger">
-							<i class="fas fa-trash"></i> Delete
-						</a>
-					</td>
+					<partial name="_ButtonsPartialView" model="@item"/>
 				</tr>
 			}
 		</tbody>

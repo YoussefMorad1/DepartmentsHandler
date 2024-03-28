@@ -10,16 +10,20 @@ namespace DAL_DataAccessLayer.Models
 {
 	public enum Gender
 	{
-		[EnumMember(Value = "Male")] // This is used to serialize the enum value as string when saved in database
+		// [EnumMember(Value = "Male")] // This is used to serialize the enum value as string when saved in database -- Why Do we need this? 
+		[Display(Name="Male")]
 		MALE = 1,
-		[EnumMember(Value = "Female")]
+		//[EnumMember(Value = "Female")]
+		[Display(Name ="Female")]
 		FEMALE = 2
 	}
-    public enum  EmplyeeType
+    public enum  EmployeeType
     {
-		[EnumMember(Value = "FullTime")]
+		// [EnumMember(Value = "Full Time")]
+		[Display(Name = "Full Time")]
         FullTime = 1,
-		[EnumMember(Value = "PartTime")]
+		// [EnumMember(Value = "Part Time")]
+		[Display(Name = "Part Time")]
 		PartTime = 2,
     }
     public class Employee
@@ -31,12 +35,13 @@ namespace DAL_DataAccessLayer.Models
 		public string Name { get; set; }
 		[Range(18, 35)] // Not Mapped with database
 		public int? Age { get; set; }
-		[RegularExpression("^[0-9]{1,3}-[a-zA-Z]{5, 10}-[a-zA-Z]{4, 10}-[a-zA-Z]{5, 10}$",
+		[RegularExpression("^[0-9]{1,3}-[a-zA-Z]{5,10}-[a-zA-Z]{4,10}-[a-zA-Z]{5,10}$",
 			ErrorMessage = "Address Must be like 123-Street-City-Country")] // Not Mapped with database
 		[Required]
 		public string Address { get; set; }
 		[DataType(DataType.Currency)] // Not Mapped with database (it's decimal(18,2) in database) [The currency is used to view the value as currency]
 		public decimal Salary { get; set; }
+		[Display(Name = "Is Active")] 
 		public bool IsActive { get; set; }
 		[EmailAddress] // Not Mapped with database, just to take format of email
 		[Required]
@@ -45,7 +50,8 @@ namespace DAL_DataAccessLayer.Models
 		[Display(Name = "Phone Number")]
 		public string Phone { get; set; }
 		public Gender Gender { get; set; }
-		public EmplyeeType EmployeeType { get; set; }
+		[Display(Name = "Employee Type")]
+		public EmployeeType EmployeeType { get; set; }
 		[Display(Name = "Hire Date")] // Not Mapped with database, just to change the name of the property in front end
 		public DateTime HireDate { get; set; }
 		[Display(Name = "Creation Date")] 
