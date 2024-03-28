@@ -28,7 +28,9 @@ namespace PL_PresentationLayerMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                departmentRepository.Add(department);
+                int count = departmentRepository.Add(department);
+                if (count > 0)
+                    TempData["Message"] = "Department Added Successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(department);
@@ -60,7 +62,9 @@ namespace PL_PresentationLayerMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                departmentRepository.Update(department);
+                int count = departmentRepository.Update(department);
+                if (count > 0)
+                    TempData["Message"] = "Department Updated Successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(department);
@@ -86,7 +90,9 @@ namespace PL_PresentationLayerMVC.Controllers
         [HttpPost]
         public IActionResult Delete(Department department)
         {
-			departmentRepository.Delete(department);
+			int count = departmentRepository.Delete(department);
+            if (count > 0)
+                TempData["Message"] = "Department Deleted Successfully";
 			return RedirectToAction(nameof(Index));
 		}
         #endregion

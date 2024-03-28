@@ -6,10 +6,17 @@
 <h1>All Departments</h1>
 <br />
 
+@if (TempData["Message"] != null)
+{
+	<div class="alert alert-success">
+		@TempData["Message"]
+	</div>
+}
+
+
 <a class="btn btn-success" asp-action="Create" mt-5>
 	Create New Department
 </a>
-
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

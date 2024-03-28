@@ -6,6 +6,14 @@
 <h1>All Employees</h1>
 <br />
 
+@if (TempData["Message"] != null)
+{
+	<div class="alert alert-success">
+		@TempData["Message"]
+	</div>
+}
+
+
 <a class="btn btn-success" asp-action="Create" mt-5>
 	Add New Employee
 </a>
@@ -100,7 +108,7 @@ else
 				var data_id = $(this).data('id');
 				var data_name = $(this).data('name');
 				$('#exampleModal form input[name=Id]').val(data_id);
-				$('#exampleModalLabel').text(data_name + ' Employee Delete');
+				$('#exampleModalLabel').text('Employee Delete');
 			})
 		});
 	</script>
