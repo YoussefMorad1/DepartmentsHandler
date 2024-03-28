@@ -28,6 +28,11 @@ namespace DAL_DataAccessLayer.Data.ModelsConfigurations
 											(g) => g.ToString(),
 											(str) => (EmployeeType)Enum.Parse(typeof(EmployeeType), str, true) 
 										);
+
+			builder.HasOne(e => e.Department)
+				.WithMany(d => d.Employees)
+				.HasForeignKey(e => e.DepartmentID)
+				.OnDelete(DeleteBehavior.SetNull);
 		}
 
 	}

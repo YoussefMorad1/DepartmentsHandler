@@ -59,5 +59,8 @@ namespace DAL_DataAccessLayer.Models
         [Display(Name = "Creation Date")]
         public DateTime CreationDate { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }
+
+        public int? DepartmentID { get; set; }
+        public Department Department { get; set; }
     }
 }

@@ -16,5 +16,7 @@ namespace DAL_DataAccessLayer.Models
 		public string Name { get; set; }
 		[Display(Name = "Date of Creation")]
 		public DateTime DateOfCreation { get; set; }
+
+		public ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
 	}
 }

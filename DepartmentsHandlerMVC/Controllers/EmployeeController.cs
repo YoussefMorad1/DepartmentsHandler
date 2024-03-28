@@ -8,20 +8,31 @@ namespace PL_PresentationLayerMVC.Controllers
 	{
 		#region Fields & Properties
 		private readonly IEmployeeRepository employeeRepository;
+		private readonly IGenericRepository<Department> departmentRepository;
 		#endregion
 
 		#region Constructor
-		public EmployeeController(IEmployeeRepository departmnetRepository)
-			=> this.employeeRepository = departmnetRepository;
+		public EmployeeController(IEmployeeRepository employeeRepository, IGenericRepository<Department> departmentRepository)
+		{
+			this.employeeRepository = employeeRepository;
+			this.departmentRepository = departmentRepository;
+		}
 		#endregion
 
 		#region Index/GetAllEmployees operations
 		public IActionResult Index()
-			=> View(employeeRepository.GetAll());
+		{
+			var employees = employeeRepository.GetAll();
+			return View(employees);
+		}
 		#endregion
 
 		#region Create Operation
-		public IActionResult Create() => View();
+		public IActionResult Create()
+		{
+			ViewBag.Departments = departmentRepository.GetAll();
+			return View();
+		}
 
 		[HttpPost]
 		public IActionResult Create(Employee employee)
@@ -56,7 +67,10 @@ namespace PL_PresentationLayerMVC.Controllers
 
 		#region Edit Operation
 		public IActionResult Edit(int? id)
-			=> GetViewWithEmployee("Edit", id);
+		{
+			ViewBag.Departments = departmentRepository.GetAll();
+			return GetViewWithEmployee("Edit", id);
+		}
 		[HttpPost]
 		public IActionResult Edit(Employee employee)
 		{

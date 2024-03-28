@@ -30,7 +30,7 @@ namespace BLL_BusinessLogicLayer.Repositories
 			return dbContext.SaveChanges();
 		}
 
-		public IEnumerable<T> GetAll()
+		public virtual IEnumerable<T> GetAll()
 		{
 			return dbContext.Set<T>().AsNoTracking().ToList();
 		}

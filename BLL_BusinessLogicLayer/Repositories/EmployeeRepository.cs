@@ -12,11 +12,15 @@ namespace BLL_BusinessLogicLayer.Repositories
 {
 	public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
 	{
-		public EmployeeRepository(MainContext dbContext) : base(dbContext) {}
+		public EmployeeRepository(MainContext dbContext) : base(dbContext) { }
 		public IQueryable<Employee> GetEmployeesByAddress(string address)
 		{
 			return dbContext.Employees
 							.Where(e => e.Address.ToLower() == address.ToLower());
+		}
+		public override IEnumerable<Employee> GetAll()
+		{
+			return dbContext.Employees.Include(e => e.Department).AsNoTracking().ToList();
 		}
 	}
 }
