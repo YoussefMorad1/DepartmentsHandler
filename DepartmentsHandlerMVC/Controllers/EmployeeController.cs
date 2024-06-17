@@ -1,6 +1,9 @@
-﻿using BLL_BusinessLogicLayer.Interfaces;
+﻿using AutoMapper;
+using BLL_BusinessLogicLayer.Interfaces;
 using DAL_DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
+using PL_PresentationLayerMVC.ViewModels;
+using System.Collections.Generic;
 
 namespace PL_PresentationLayerMVC.Controllers
 {
@@ -9,13 +12,16 @@ namespace PL_PresentationLayerMVC.Controllers
 		#region Fields & Properties
 		private readonly IEmployeeRepository employeeRepository;
 		private readonly IGenericRepository<Department> departmentRepository;
+		private readonly IMapper mapper;
 		#endregion
 
 		#region Constructor
-		public EmployeeController(IEmployeeRepository employeeRepository, IGenericRepository<Department> departmentRepository)
+		public EmployeeController(IEmployeeRepository employeeRepository,
+			IGenericRepository<Department> departmentRepository, IMapper mapper)
 		{
 			this.employeeRepository = employeeRepository;
 			this.departmentRepository = departmentRepository;
+			this.mapper = mapper;
 		}
 		#endregion
 
@@ -23,7 +29,8 @@ namespace PL_PresentationLayerMVC.Controllers
 		public IActionResult Index()
 		{
 			var employees = employeeRepository.GetAll();
-			return View(employees);
+			var employeesVm = mapper.Map<IEnumerable<EmployeeViewModel>>(employees);
+			return View(employeesVm);
 		}
 		#endregion
 
@@ -35,16 +42,17 @@ namespace PL_PresentationLayerMVC.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Create(Employee employee)
+		public IActionResult Create(EmployeeViewModel employeeVm)
 		{
 			if (ModelState.IsValid)
 			{
+				var employee = mapper.Map<Employee>(employeeVm);
 				int count = employeeRepository.Add(employee);
 				if (count > 0)
 					TempData["Message"] = "Employee Added Successfully";
 				return RedirectToAction(nameof(Index));
 			}
-			return View(employee);
+			return Create();
 		}
 		#endregion
 
@@ -54,9 +62,10 @@ namespace PL_PresentationLayerMVC.Controllers
 			if (!id.HasValue)
 				return NotFound();
 			var employee = employeeRepository.GetById(id.Value);
+			var employeeVm = mapper.Map<EmployeeViewModel>(employee);
 			if (employee == null)
 				return NotFound();
-			return View(viewName, employee);
+			return View(viewName, employeeVm);
 		}
 		#endregion
 
@@ -71,17 +80,23 @@ namespace PL_PresentationLayerMVC.Controllers
 			ViewBag.Departments = departmentRepository.GetAll();
 			return GetViewWithEmployee("Edit", id);
 		}
+		public IActionResult EditPageWithViewModel(EmployeeViewModel employeeVm)
+		{
+			ViewBag.Departments = departmentRepository.GetAll();
+			return View("Edit", employeeVm);
+		}
 		[HttpPost]
-		public IActionResult Edit(Employee employee)
+		public IActionResult Edit(EmployeeViewModel employeeVm)
 		{
 			if (ModelState.IsValid)
 			{
+				var employee = mapper.Map<Employee>(employeeVm);
 				int count = employeeRepository.Update(employee);
 				if (count > 0)
 					TempData["Message"] = "Employee Updated Successfully";
 				return RedirectToAction(nameof(Index));
 			}
-			return View(employee);
+			return EditPageWithViewModel(employeeVm);
 		}
 		#endregion
 
@@ -91,6 +106,7 @@ namespace PL_PresentationLayerMVC.Controllers
 			=> GetViewWithEmployee("Delete", id);
 
 		// Gets Employee from Database and Deletes it
+		// Used with the bootstrap modal to delete an employee when knowing only id
 		[HttpPost]
 		public IActionResult DeleteById(int? id)
 		{

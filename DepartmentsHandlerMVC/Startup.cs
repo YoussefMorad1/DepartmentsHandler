@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PL_PresentationLayerMVC.MappingProfiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace DepartmentsHandlerMVC
 				);
 			services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
 			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+			services.AddAutoMapper(conf => conf.AddProfile(new EmployeeProfile()));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
