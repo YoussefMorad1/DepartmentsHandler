@@ -18,16 +18,14 @@ namespace BLL_BusinessLogicLayer.Repositories
 			=> this.dbContext = dbContext;
 
 
-		public int Add(T item)
+		public void Add(T item)
 		{
 			dbContext.Add(item);
-			return dbContext.SaveChanges();
 		}
 
-		public int Delete(T item)
+		public void Delete(T item)
 		{
 			dbContext.Remove(item);
-			return dbContext.SaveChanges();
 		}
 
 		public virtual IEnumerable<T> GetAll()
@@ -44,10 +42,9 @@ namespace BLL_BusinessLogicLayer.Repositories
 			return dbContext.Set<T>().Find(id);
 		}
 
-		public int Update(T item)
+		public void Update(T item)
 		{
 			dbContext.Update(item);
-			return dbContext.SaveChanges();
 		}
 	}
 }

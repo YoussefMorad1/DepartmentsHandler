@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace BLL_BusinessLogicLayer.Interfaces
 {
-	public interface IEmployeeRepository : IGenericRepository<Employee>
+	public interface IUnitOfWork : IDisposable
 	{
-		IQueryable<Employee> GetEmployeesByAddress(string address);
-		IQueryable<Employee> SearchEmployeesByNames(string name);
+		IEmployeeRepository Employees { get; }
+		IGenericRepository<Department> Departments { get; }
+		int Complete();
 	}
 }

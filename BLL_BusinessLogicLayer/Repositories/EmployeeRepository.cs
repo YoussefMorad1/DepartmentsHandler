@@ -22,5 +22,11 @@ namespace BLL_BusinessLogicLayer.Repositories
 		{
 			return dbContext.Employees.Include(e => e.Department).AsNoTracking().ToList();
 		}
+
+		public IQueryable<Employee> SearchEmployeesByNames(string name)
+		{
+			return dbContext.Employees
+							.Where(e => e.Name.ToLower().Contains(name.ToLower()));
+		}
 	}
 }

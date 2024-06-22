@@ -1,5 +1,7 @@
 ﻿@model EmployeeViewModel
+@* @inject IUnitOfWork unitOfWork *@
 @{
+	// var departments = new SelectList(unitOfWork.Departments.GetAll(), "Id", "Name");
 	var departments = new SelectList(ViewBag.Departments, "Id", "Name");
 }
 
@@ -7,6 +9,11 @@
 	<label asp-for="Name" class="col-form-label"></label>
 	<input asp-for="Name" class="form-control" />
 	<span asp-validation-for="Name" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+	<label asp-for="Image" class="col-form-label"></label>
+	<input asp-for="Image" class="form-control" />
 </div>
 
 <div class="form-group">

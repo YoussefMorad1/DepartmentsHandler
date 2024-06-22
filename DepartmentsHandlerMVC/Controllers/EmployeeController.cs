@@ -2,6 +2,7 @@
 using BLL_BusinessLogicLayer.Interfaces;
 using DAL_DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
+using PL_PresentationLayerMVC.Helpers;
 using PL_PresentationLayerMVC.ViewModels;
 using System.Collections.Generic;
 
@@ -10,25 +11,26 @@ namespace PL_PresentationLayerMVC.Controllers
 	public class EmployeeController : Controller
 	{
 		#region Fields & Properties
-		private readonly IEmployeeRepository employeeRepository;
-		private readonly IGenericRepository<Department> departmentRepository;
+		private readonly IUnitOfWork unitOfWork;
 		private readonly IMapper mapper;
 		#endregion
 
 		#region Constructor
-		public EmployeeController(IEmployeeRepository employeeRepository,
-			IGenericRepository<Department> departmentRepository, IMapper mapper)
+		public EmployeeController(IUnitOfWork unitOfWork, IMapper mapper)
 		{
-			this.employeeRepository = employeeRepository;
-			this.departmentRepository = departmentRepository;
+			this.unitOfWork = unitOfWork;
 			this.mapper = mapper;
 		}
 		#endregion
 
 		#region Index/GetAllEmployees operations
-		public IActionResult Index()
+		public IActionResult Index(string SearchValue)
 		{
-			var employees = employeeRepository.GetAll();
+			IEnumerable<Employee> employees;
+			if (string.IsNullOrEmpty(SearchValue))
+				employees = unitOfWork.Employees.GetAll();
+			else
+				employees = unitOfWork.Employees.SearchEmployeesByNames(SearchValue);
 			var employeesVm = mapper.Map<IEnumerable<EmployeeViewModel>>(employees);
 			return View(employeesVm);
 		}
@@ -37,7 +39,7 @@ namespace PL_PresentationLayerMVC.Controllers
 		#region Create Operation
 		public IActionResult Create()
 		{
-			ViewBag.Departments = departmentRepository.GetAll();
+			ViewBag.Departments = unitOfWork.Departments.GetAll();
 			return View();
 		}
 
@@ -46,10 +48,14 @@ namespace PL_PresentationLayerMVC.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				employeeVm.ImageName = DocumentSettings.UploadFile(employeeVm.Image, "Images");
 				var employee = mapper.Map<Employee>(employeeVm);
-				int count = employeeRepository.Add(employee);
+				unitOfWork.Employees.Add(employee);
+				int count = unitOfWork.Complete();
 				if (count > 0)
+				{
 					TempData["Message"] = "Employee Added Successfully";
+				}
 				return RedirectToAction(nameof(Index));
 			}
 			return Create();
@@ -61,7 +67,7 @@ namespace PL_PresentationLayerMVC.Controllers
 		{
 			if (!id.HasValue)
 				return NotFound();
-			var employee = employeeRepository.GetById(id.Value);
+			var employee = unitOfWork.Employees.GetById(id.Value);
 			var employeeVm = mapper.Map<EmployeeViewModel>(employee);
 			if (employee == null)
 				return NotFound();
@@ -77,12 +83,12 @@ namespace PL_PresentationLayerMVC.Controllers
 		#region Edit Operation
 		public IActionResult Edit(int? id)
 		{
-			ViewBag.Departments = departmentRepository.GetAll();
+			ViewBag.Departments = unitOfWork.Departments.GetAll();
 			return GetViewWithEmployee("Edit", id);
 		}
 		public IActionResult EditPageWithViewModel(EmployeeViewModel employeeVm)
 		{
-			ViewBag.Departments = departmentRepository.GetAll();
+			ViewBag.Departments = unitOfWork.Departments.GetAll();
 			return View("Edit", employeeVm);
 		}
 		[HttpPost]
@@ -90,10 +96,14 @@ namespace PL_PresentationLayerMVC.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				employeeVm.ImageName = DocumentSettings.UploadFile(employeeVm.Image, "Images");
 				var employee = mapper.Map<Employee>(employeeVm);
-				int count = employeeRepository.Update(employee);
+				unitOfWork.Employees.Update(employee);
+				int count = unitOfWork.Complete();
 				if (count > 0)
+				{
 					TempData["Message"] = "Employee Updated Successfully";
+				}
 				return RedirectToAction(nameof(Index));
 			}
 			return EditPageWithViewModel(employeeVm);
@@ -112,17 +122,24 @@ namespace PL_PresentationLayerMVC.Controllers
 		{
 			if (!id.HasValue)
 				return NotFound();
-			var employee = employeeRepository.GetById(id.Value);
+			var employee = unitOfWork.Employees.GetById(id.Value);
 			if (employee == null)
 				return NotFound();
-			return Delete(employee);
+			return DeleteByEmployee(employee);
 		}
 		[HttpPost]
-		public IActionResult Delete(Employee employee)
+		public IActionResult Delete(EmployeeViewModel employeeVm)
+			=> DeleteByEmployee(mapper.Map<Employee>(employeeVm));
+
+		public IActionResult DeleteByEmployee(Employee employee)
 		{
-			int count = employeeRepository.Delete(employee);
+			unitOfWork.Employees.Delete(employee);
+			int count = unitOfWork.Complete();
 			if (count > 0)
+			{
 				TempData["Message"] = "Employee Deleted Successfully";
+				DocumentSettings.DeleteFile(employee.ImageName, "Images");
+			}
 			return RedirectToAction(nameof(Index));
 		}
 		#endregion

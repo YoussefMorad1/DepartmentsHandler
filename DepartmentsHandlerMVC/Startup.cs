@@ -33,8 +33,9 @@ namespace DepartmentsHandlerMVC
 			services.AddDbContext<MainContext>(
 				options => options.UseSqlServer(Configuration.GetConnectionString("DevelopmentConnection"))
 				);
-			services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
-			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+			//services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
+			//services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+			services.AddScoped<IUnitOfWork, UnitOfWork>();
 			services.AddAutoMapper(conf => conf.AddProfile(new EmployeeProfile()));
 		}
 

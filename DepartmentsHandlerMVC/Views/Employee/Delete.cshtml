@@ -7,8 +7,8 @@
 <br />
 
 <div>
-	<partial name="PartialViews/DetailsDeletePartialView" />
 	<form asp-action="Delete">
+		<partial name="PartialViews/DetailsDeletePartialView" />
 		<input type="submit" value="Delete" asp-action="Delete" class="btn btn-danger" />
 		<a asp-action="Index" class="btn btn-light">Cancel</a>
 	</form>

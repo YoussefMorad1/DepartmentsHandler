@@ -7,17 +7,17 @@ namespace PL_PresentationLayerMVC.Controllers
     public class DepartmentController : Controller
     {
         #region Fields & Properties
-        private readonly IGenericRepository<Department> departmentRepository;
-        #endregion
+		private readonly IUnitOfWork unitOfWork;
+		#endregion
 
-        #region Constructor
-        public DepartmentController(IGenericRepository<Department> departmnetRepository)
-            => this.departmentRepository = departmnetRepository;
-        #endregion
+		#region Constructor
+		public DepartmentController(IUnitOfWork unitOfWork)
+		    => this.unitOfWork = unitOfWork;
+		#endregion
 
-        #region Index/GetAllDepartments operations
-        public IActionResult Index()
-            => View(departmentRepository.GetAll());
+		#region Index/GetAllDepartments operations
+		public IActionResult Index()
+            => View(unitOfWork.Departments.GetAll());
         #endregion
 
         #region Create Operation
@@ -28,7 +28,8 @@ namespace PL_PresentationLayerMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                int count = departmentRepository.Add(department);
+                unitOfWork.Departments.Add(department);
+                int count = unitOfWork.Complete();
                 if (count > 0)
                     TempData["Message"] = "Department Added Successfully";
                 return RedirectToAction(nameof(Index));
@@ -42,7 +43,7 @@ namespace PL_PresentationLayerMVC.Controllers
         {
             if (!id.HasValue)
                 return NotFound();
-            var department = departmentRepository.GetById(id.Value);
+            var department = unitOfWork.Departments.GetById(id.Value);
             if (department == null)
                 return NotFound();
             return View(viewName, department);
@@ -62,7 +63,8 @@ namespace PL_PresentationLayerMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                int count = departmentRepository.Update(department);
+				unitOfWork.Departments.Update(department);
+				int count = unitOfWork.Complete();
                 if (count > 0)
                     TempData["Message"] = "Department Updated Successfully";
                 return RedirectToAction(nameof(Index));
@@ -82,7 +84,7 @@ namespace PL_PresentationLayerMVC.Controllers
         {
             if (!id.HasValue)
 				return NotFound();
-            var department = departmentRepository.GetById(id.Value);
+            var department = unitOfWork.Departments.GetById(id.Value);
             if (department == null)
                 return NotFound();
             return Delete(department);
@@ -90,7 +92,8 @@ namespace PL_PresentationLayerMVC.Controllers
         [HttpPost]
         public IActionResult Delete(Department department)
         {
-			int count = departmentRepository.Delete(department);
+			unitOfWork.Departments.Delete(department);
+			int count = unitOfWork.Complete();
             if (count > 0)
                 TempData["Message"] = "Department Deleted Successfully";
 			return RedirectToAction(nameof(Index));

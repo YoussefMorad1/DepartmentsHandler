@@ -49,5 +49,6 @@ namespace DAL_DataAccessLayer.Models
         public bool IsDeleted { get; set; }
         public int? DepartmentID { get; set; }
         public Department Department { get; set; }
+        public string ImageName { get; set; }
     }
 }

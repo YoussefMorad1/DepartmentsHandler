@@ -1,6 +1,7 @@
 ﻿using DAL_DataAccessLayer.Models;
 using System.ComponentModel.DataAnnotations;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace PL_PresentationLayerMVC.ViewModels
 {
@@ -36,5 +37,7 @@ namespace PL_PresentationLayerMVC.ViewModels
 		[Display(Name = "Creation Date")]
 		public int? DepartmentID { get; set; }
 		public Department Department { get; set; }
+		public IFormFile Image { get; set;}
+		public string ImageName { get; set; }
 	}
 }

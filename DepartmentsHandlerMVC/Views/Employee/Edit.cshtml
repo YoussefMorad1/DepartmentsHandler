@@ -7,9 +7,8 @@
 <h1>Employee Edit</h1>
 <br />
 
-<form asp-action="Edit">
+<form asp-action="Edit" enctype="multipart/form-data">
 	<partial name="PartialViews/CreateEditPartialView" />
-
 	<input type="submit" value="Save" class="btn btn-success" />
 	<a asp-action="Index" class="btn btn-light">Cancel</a>
 </form>
