@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DAL_DataAccessLayer.Models;
+using Microsoft.AspNetCore.Http;
 using PL_PresentationLayerMVC.ViewModels;
 
 namespace PL_PresentationLayerMVC.MappingProfiles
@@ -9,8 +10,9 @@ namespace PL_PresentationLayerMVC.MappingProfiles
 		public EmployeeProfile()
 		{
 			CreateMap<EmployeeViewModel, Employee>()
-				.ReverseMap();
 				/*.ForMember(e => e.DepartmentID, opt => opt.MapFrom(evm => evm.Department.Id))*/
+				.ReverseMap()
+				;
 		}
 	}
 }

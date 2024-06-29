@@ -39,7 +39,7 @@ namespace BLL_BusinessLogicLayer.Repositories
 				return departmentRepository;
 			}
 		}
-		public int Complete() =>  dbContext.SaveChanges();
+		public async Task<int> CompleteAsync() =>  await dbContext.SaveChangesAsync();
 		public void Dispose() => dbContext.Dispose();
 	}
 }

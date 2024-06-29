@@ -18,9 +18,9 @@ namespace BLL_BusinessLogicLayer.Repositories
 			return dbContext.Employees
 							.Where(e => e.Address.ToLower() == address.ToLower());
 		}
-		public override IEnumerable<Employee> GetAll()
+		public override async Task<IEnumerable<Employee>> GetAllAsync()
 		{
-			return dbContext.Employees.Include(e => e.Department).AsNoTracking().ToList();
+			return await dbContext.Employees.Include(e => e.Department).AsNoTracking().ToListAsync();
 		}
 
 		public IQueryable<Employee> SearchEmployeesByNames(string name)

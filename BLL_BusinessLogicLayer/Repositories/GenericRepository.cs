@@ -18,9 +18,9 @@ namespace BLL_BusinessLogicLayer.Repositories
 			=> this.dbContext = dbContext;
 
 
-		public void Add(T item)
+		public async Task AddAsync(T item)
 		{
-			dbContext.Add(item);
+			await dbContext.AddAsync(item);
 		}
 
 		public void Delete(T item)
@@ -28,18 +28,18 @@ namespace BLL_BusinessLogicLayer.Repositories
 			dbContext.Remove(item);
 		}
 
-		public virtual IEnumerable<T> GetAll()
+		public async virtual Task<IEnumerable<T>> GetAllAsync()
 		{
-			return dbContext.Set<T>().AsNoTracking().ToList();
+			return await dbContext.Set<T>().AsNoTracking().ToListAsync();
 		}
 
-		public T GetById(int id)
+		public async Task<T> GetByIdAsync(int id)
 		{
 			//var item = dbContext.Set<T>().Local.Where(d => d.Id == id).FirstOrDefault();
 			//if (item == null)
 			//	item = dbContext.Set<T>().Where(d => d.Id == id).FirstOrDefault();
 			//return item;
-			return dbContext.Set<T>().Find(id);
+			return await dbContext.Set<T>().FindAsync(id);
 		}
 
 		public void Update(T item)

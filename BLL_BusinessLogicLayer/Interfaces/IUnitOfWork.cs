@@ -11,6 +11,6 @@ namespace BLL_BusinessLogicLayer.Interfaces
 	{
 		IEmployeeRepository Employees { get; }
 		IGenericRepository<Department> Departments { get; }
-		int Complete();
+		Task<int> CompleteAsync();
 	}
 }

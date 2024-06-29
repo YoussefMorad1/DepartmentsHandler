@@ -10,9 +10,9 @@ namespace BLL_BusinessLogicLayer.Interfaces
 {
 	public interface IGenericRepository<T> where T : class
 	{
-		IEnumerable<T> GetAll();
-		T GetById(int id);
-		void Add(T department);
+		Task<IEnumerable<T>> GetAllAsync();
+		Task<T> GetByIdAsync(int id);
+		Task AddAsync(T department);
 		void Update(T department);
 		void Delete(T department);
 	}
