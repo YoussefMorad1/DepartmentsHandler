@@ -5,6 +5,7 @@ using DAL_DataAccessLayer.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +38,15 @@ namespace DepartmentsHandlerMVC
 			//services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 			services.AddAutoMapper(conf => conf.AddProfile(new EmployeeProfile()));
+			services.AddIdentity<AppUser, IdentityRole>(
+				options =>
+				{
+					options.Password.RequireDigit = true;
+					options.Password.RequireLowercase = true;
+					options.Password.RequireUppercase = true;
+				}) // Tell the application to use the AppUser and IdentityRole.
+				.AddEntityFrameworkStores<MainContext>(); // Tell the application to use the MainContext for the Identity.
+			services.AddAuthentication(); // Add the UserManager, SignInManager, RoleManager.
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

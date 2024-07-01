@@ -5,7 +5,10 @@
 	var departments = new SelectList(ViewBag.Departments, "Id", "Name");
 }
 
-@if (Model.ImageName != null)
+<div asp-validation-summary="All">
+</div>
+
+@if (Model?.ImageName != null)
 {
 	<div>
 		<img src="~/Files/Images/@Model.ImageName" class="rounded" width="100" height="100" />

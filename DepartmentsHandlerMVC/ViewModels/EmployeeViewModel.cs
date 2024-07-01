@@ -10,7 +10,7 @@ namespace PL_PresentationLayerMVC.ViewModels
 		public int Id { get; set; }
 		[Required(ErrorMessage = "Name is required")] // Mapped with database
 		[MaxLength(50, ErrorMessage = "Name can't be more than 50 characters")] // Mapped with database
-		[MinLength(5, ErrorMessage = "Name can't be less than 3 characters")] // Not Mapped with database
+		[MinLength(5, ErrorMessage = "Name can't be less than 5 characters")] // Not Mapped with database
 		public string Name { get; set; }
 		[Range(18, 35)] // Not Mapped with database
 		public int? Age { get; set; }
