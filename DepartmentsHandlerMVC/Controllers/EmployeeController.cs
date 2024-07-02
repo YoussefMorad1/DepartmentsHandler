@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL_BusinessLogicLayer.Interfaces;
 using DAL_DataAccessLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PL_PresentationLayerMVC.Helpers;
 using PL_PresentationLayerMVC.ViewModels;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace PL_PresentationLayerMVC.Controllers
 {
+	[Authorize]
 	public class EmployeeController : Controller
 	{
 		#region Fields & Properties

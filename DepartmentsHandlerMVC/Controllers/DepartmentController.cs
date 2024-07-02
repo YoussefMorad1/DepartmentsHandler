@@ -1,10 +1,12 @@
 ﻿using BLL_BusinessLogicLayer.Interfaces;
 using DAL_DataAccessLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace PL_PresentationLayerMVC.Controllers
 {
+    [Authorize]
     public class DepartmentController : Controller
     {
         #region Fields & Properties
