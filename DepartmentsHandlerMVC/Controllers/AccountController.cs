@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PL_PresentationLayerMVC.Helpers;
 using PL_PresentationLayerMVC.ViewModels;
 using System.Threading.Tasks;
 
@@ -75,5 +76,72 @@ namespace PL_PresentationLayerMVC.Controllers
 			await signInManager.SignOutAsync();
 			return RedirectToAction(nameof(Login));
 		}
+
+		[HttpGet]
+		public IActionResult ForgetPassword()
+		{
+			return View();
+		}
+
+		public IActionResult CheckYourInbox()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> SendEmail(ForgetPasswordViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var user = await userManager.FindByEmailAsync(model.Email);
+				if (user != null)
+				{
+					var token = await userManager.GeneratePasswordResetTokenAsync(user);
+					var resetLink = Url.Action("ResetPassword", "Account", new { email = model.Email, token }, Request.Scheme);
+					var email = new Email
+					{
+						To = model.Email,
+						Subject = "Reset Password",
+						Body = resetLink
+					};
+					EmailHelper.SendEmail(email);
+					return RedirectToAction(nameof(CheckYourInbox));
+				}
+				ModelState.AddModelError(string.Empty, "The Email is not registered");
+			}
+			return View(nameof(ForgetPassword), model);
+		}
+
+		[HttpGet]
+		public IActionResult ResetPassword(string email, string token)
+		{
+			if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(token))
+				return RedirectToAction(nameof(Login));
+			TempData["Email"] = email;
+			TempData["Token"] = token;
+			return View();
+		}
+		[HttpPost]
+		public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var email = TempData["Email"] as string;
+				var token = TempData["Token"] as string;
+				var user = await userManager.FindByEmailAsync(email);
+				if (user != null)
+				{
+					var result = await userManager.ResetPasswordAsync(user, token, model.Password);
+					if (result.Succeeded)
+						return RedirectToAction(nameof(Login));
+					foreach (var err in result.Errors)
+						ModelState.AddModelError(string.Empty, err.Description);
+				}
+				else
+					ModelState.AddModelError(string.Empty, "The Email is not registered");
+			}
+			return View(model);
+		}
 	}
+
 }

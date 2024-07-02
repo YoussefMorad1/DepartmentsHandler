@@ -9,7 +9,7 @@
 		<div class="icon d-flex align-items-center justify-content-center">
 			<span class="fa fa-user-o"></span>
 		</div>
-		<h3 class="text-center mb-4">Have an account? <a asp-action="Login">Login Now!</a></h3>
+		
 		<form asp-action="Register" class="login-form">
 			
 			<div class="form-group">
@@ -42,6 +42,7 @@
 				</div>
 			</div>
 			<div asp-validation-summary="ModelOnly"></div>
+			<h3 class="text-center mb-4">Have an account? <a asp-action="Login">Login Now!</a></h3>
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary rounded submit p-3 px-5">Register</button>
 			</div>
