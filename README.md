@@ -8,12 +8,13 @@ The Department Management System is a web application designed to manage departm
 
 ## Features
 
-- **Department Management**: View, add, update, and delete department details.
-- **Employee Management**: View, add, update, and delete employee details.
-- **Responsive UI**: Built using HTML, Bootstrap, and jQuery for a seamless user experience.
-- **Robust Back-End**: Utilizes Entity Framework Core (EF Core) with a code-first approach for database management on MS SQL Server.
-- **Scalable Architecture**: Implements a three-tier architecture (Presentation Layer, Business Logic Layer, Data Access Layer) for maintainability and scalability.
-- **Efficient Data Access**: Employs the Repository design pattern to facilitate scalable and maintainable data access.
+- **Department Management:** View, add, update, and delete department details.
+- **Employee Management:** View, add, update, and delete employee details.
+- **Authentication and Authorization:** Includes registration, login, and password recovery via email and cookies.
+- **Responsive UI:** Built using HTML, Bootstrap, and jQuery for a seamless user experience.
+- **Robust Back-End:** Utilizes Entity Framework Core (EF Core) with a code-first approach for database management on MS SQL Server.
+- **Scalable Architecture:** Implements a three-tier architecture (Presentation Layer, Business Logic Layer, Data Access Layer) for maintainability and scalability.
+- **Efficient Data Access:** Employs the Repository and Unit of Work patterns to facilitate scalable, transactional data access.
 
 ## Technologies Used
 
