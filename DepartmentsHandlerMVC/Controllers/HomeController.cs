@@ -1,4 +1,5 @@
 ﻿using DepartmentsHandlerMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,7 +18,6 @@ namespace DepartmentsHandlerMVC.Controllers
 		{
 			_logger = logger;
 		}
-
 		public IActionResult Index()
 		{
 			return View();

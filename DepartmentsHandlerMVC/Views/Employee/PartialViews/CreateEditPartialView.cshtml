@@ -1,0 +1,110 @@
+﻿@model EmployeeViewModel
+@* @inject IUnitOfWork unitOfWork *@
+@{
+	// var departments = new SelectList(unitOfWork.Departments.GetAllAsync(), "Id", "Name");
+	var departments = new SelectList(ViewBag.Departments, "Id", "Name");
+}
+
+<div asp-validation-summary="All">
+</div>
+
+@if (Model?.ImageName != null)
+{
+	<div>
+		<img src="~/Files/Images/@Model.ImageName" class="rounded" width="100" height="100" />
+		<input hidden asp-for="ImageName" />
+	</div>
+}	
+
+<div class="form-group">
+	<label asp-for="Name" class="col-form-label"></label>
+	<input asp-for="Name" class="form-control" />
+	<span asp-validation-for="Name" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+	<label asp-for="Image" class="col-form-label"></label>
+	<input asp-for="Image" class="form-control" />
+</div>
+
+<div class="form-group">
+	<label asp-for="Age" class="col-form-label"></label>
+	<input asp-for="Age" class="form-control" />
+	<span asp-validation-for="Age" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+	<label asp-for="Address" class="col-form-label"></label>
+	<input asp-for="Address" class="form-control" />
+	<span asp-validation-for="Address" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+	<label asp-for="Salary" class="col-form-label"></label>
+	<input asp-for="Salary" class="form-control" />
+	<span asp-validation-for="Salary" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+	<label asp-for="Department" class="col-form-label"></label>
+	<select class="form-control" asp-for="DepartmentID" asp-items="@departments">
+		<option value="">-- Select Department --</option>
+	</select>
+</div>
+
+
+<div class="form-group">
+	<label asp-for="IsActive" class="col-form-label"></label>
+	<input asp-for="IsActive" />
+	<span asp-validation-for="IsActive" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+	<label asp-for="Email" class="col-form-label"></label>
+	<input asp-for="Email" class="form-control" />
+	<span asp-validation-for="Email" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+	<label asp-for="Phone" class="col-form-label"></label>
+	<input asp-for="Phone" class="form-control" />
+	<span asp-validation-for="Phone" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+	<label asp-for="Gender" class="col-form-label"></label>
+	<br />
+	@foreach (var item in Enum.GetValues(typeof(Gender)))
+	{
+		<label>
+			<input asp-for="Gender" value="@item" type="radio" />
+			@{
+				var ItemDisplayName = item.GetType().GetMember(item.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName().ToString();
+				@ItemDisplayName
+			}
+		</label>
+	}
+</div>
+
+<div class="form-group">
+	<label asp-for="EmployeeType" class="col-form-label"></label>
+	<select asp-for="EmployeeType" class="form-control">
+		<option value="">-- Select Employee Type --</option>
+		@foreach (var item in Enum.GetValues(typeof(EmployeeType)))
+		{
+			<option asp-for="Gender" value="@item">
+				@{
+					var ItemDisplayName = item.GetType().GetMember(item.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName().ToString();
+					@ItemDisplayName
+				}
+			</option>
+		}
+	</select>
+	<span asp-validation-for="EmployeeType" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+	<label asp-for="HireDate" class="col-form-label"></label>
+	<input asp-for="HireDate" class="form-control" />
+	<span asp-validation-for="HireDate" class="text-danger"></span>
+</div>

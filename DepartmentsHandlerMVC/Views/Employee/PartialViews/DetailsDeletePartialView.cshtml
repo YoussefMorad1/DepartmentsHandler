@@ -1,0 +1,81 @@
+﻿@model EmployeeViewModel
+
+@if (Model.ImageName != null)
+{
+	<div>
+		<img src="~/Files/Images/@Model.ImageName" class="rounded" width="100" height="100"/>
+		<input hidden asp-for="ImageName" />
+	</div>
+}
+
+<div class="form-group">
+	<label asp-for="Name" class="col-form-label"></label>
+	<input readonly  asp-for="Name" class="form-control" />
+</div>
+
+<div class="form-group">
+	<label asp-for="Age" class="col-form-label"></label>
+	<input readonly  asp-for="Age" class="form-control" />
+</div>
+
+<div class="form-group">
+	<label asp-for="Address" class="col-form-label"></label>
+	<input readonly  asp-for="Address" class="form-control" />
+</div>
+
+<div class="form-group">
+	<label asp-for="Salary" class="col-form-label"></label>
+	<input readonly  asp-for="Salary" class="form-control" />
+</div>
+
+<div class="form-group">
+	<label asp-for="IsActive" class="col-form-label"></label>
+	<input disabled  asp-for="IsActive" />
+</div>
+
+<div class="form-group">
+	<label asp-for="Email" class="col-form-label"></label>
+	<input readonly  asp-for="Email" class="form-control" />
+</div>
+
+<div class="form-group">
+	<label asp-for="Phone" class="col-form-label"></label>
+	<input readonly  asp-for="Phone" class="form-control" />
+</div>
+
+<div class="form-group">
+	<label asp-for="Gender" class="col-form-label"></label>
+	<br />
+	@foreach (var item in Enum.GetValues(typeof(Gender)))
+	{
+		<label>
+			<input disabled asp-for="Gender" value="@item" type="radio" />
+			@{
+				var ItemDisplayName = item.GetType().GetMember(item.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName().ToString();
+				@ItemDisplayName
+			}
+		</label>
+	}
+</div>
+
+<div class="form-group">
+	<label asp-for="EmployeeType" class="col-form-label"></label>
+	<select disabled asp-for="EmployeeType" class="form-control">
+		<option value="">-- Select Employee Type --</option>
+		@foreach (var item in Enum.GetValues(typeof(EmployeeType)))
+		{
+			<option asp-for="Gender" value="@item">
+				@{
+					var ItemDisplayName = item.GetType().GetMember(item.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName().ToString();
+					@ItemDisplayName
+				}
+			</option>
+		}
+	</select>
+</div>
+
+<div class="form-group">
+	<label asp-for="HireDate" class="col-form-label"></label>
+	<input readonly asp-for="HireDate" class="form-control" />
+	<span asp-validation-for="HireDate" class="text-danger"></span>
+</div>
