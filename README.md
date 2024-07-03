@@ -32,20 +32,3 @@ The Department Management System is a web application designed to manage departm
 ## Contribution
 
 Contributions are welcome! Please fork the repository and submit pull requests for any improvements or bug fixes.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-## Contact
-
-For any inquiries or further information, please contact:
-
-**Youssef Morad**
-- **Email**: youssefmohammed747@gmail.com
-- **LinkedIn**: [linkedin.com/in/youssef-morad](https://www.linkedin.com/in/youssef-morad)
-- **GitHub**: [github.com/YoussefMorad1](https://github.com/YoussefMorad1)
-
----
-
-Feel free to customize the repository link and any other specific details as necessary.
