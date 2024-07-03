@@ -23,38 +23,6 @@ The Department Management System is a web application designed to manage departm
 - **Database**: MS SQL Server, EF Core
 - **Data Access**: LINQ, Repository Pattern
 
-## Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone [repository link]
-   cd [repository folder]
-   ```
-
-2. **Setup the database**:
-   - Ensure MS SQL Server is installed and running.
-   - Update the connection string in the `appsettings.json` file to match your database configuration.
-   - Run the following commands to create and seed the database:
-     ```bash
-     dotnet ef migrations add InitialCreate
-     dotnet ef database update
-     ```
-
-3. **Run the application**:
-   ```bash
-   dotnet run
-   ```
-   The application will start on `http://localhost:5000`.
-
-## Usage
-
-- **Departments**: 
-  - Navigate to the Departments page to view all departments.
-  - Use the options to add, update, or delete department records.
-- **Employees**:
-  - Navigate to the Employees page to view all employees.
-  - Use the options to add, update, or delete employee records.
-
 ## Project Structure
 
 - **Presentation Layer**: Contains the MVC controllers and views for the application.
